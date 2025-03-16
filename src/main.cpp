@@ -38,12 +38,26 @@ void setup()
 
 void loop()
 {
-    const int read_freq = map(analogRead(freq_pot), 10, 1000, USMIN, USMAX);
-    const int microsec = constrain(read_freq, USMIN, USMAX);
+
 
     for (int mot_id = 0; mot_id < NUM_SERVOS; ++mot_id)
     {
-        pwm.writeMicroseconds(mot_id, microsec);
+        const int read_freq = map(analogRead(freq_pot), 10, 1000, USMIN, USMAX);
+        const int microsec = constrain(read_freq, USMIN, USMAX);
+        Serial.println(read_freq);
+        if(read_freq > 1500){
+            if(mot_id%2){
+                pwm.writeMicroseconds(mot_id, USMAX);
+            } else { 
+                pwm.writeMicroseconds(mot_id, USMIN);
+            }
+        } else { 
+            if(mot_id%2){
+                pwm.writeMicroseconds(mot_id, USMIN);
+            } else { 
+                pwm.writeMicroseconds(mot_id, USMAX);
+            }
+        }
     }
     delay(100);
     // // int input = map(analogRead(POT_PIN), 10, 1000, USMIN, USMAX);

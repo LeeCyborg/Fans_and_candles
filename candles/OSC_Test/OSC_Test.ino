@@ -55,7 +55,6 @@ void ledtoggle(OSCMessage &msg) {
 void receiveMessage() {
   OSCMessage inmsg;
   int size = Udp.parsePacket();
-
   if (size > 0) {
     while (size--) {
       inmsg.fill(Udp.read());
